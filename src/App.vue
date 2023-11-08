@@ -417,7 +417,6 @@ const tww2 = ref(tww/r);
 // console.log(`${tww}, ${twh}, ${r}, ${tww2.value}, ${twh2.value}: `);
 
 
-
 export default {
   data() {
     return {
@@ -453,7 +452,7 @@ export default {
   #theMap {
     width:480px;
     height:480px;
-    /* border:1px solid #bbb; */
+    /* background-color:rgba(240, 252, 255, 1); */
   }
 }
 
@@ -525,7 +524,7 @@ export default {
           <div class="row">
             <div class="col">
               <div class="text-center"><h1 class="text-primary" v-text="currCountyName"></h1></div>
-              <div class="fixed-top p-3 text-end d-lg-none">
+              <div class="fixed-top p-3 text-start d-lg-none">
                 <div class="d-inline-block bg-light rounded-pill px-3 py-2 text-warning" @click="showDivMap"><font-awesome-icon icon="fa-solid fa-map" size="lg"></font-awesome-icon></div>
               </div>
             </div>
