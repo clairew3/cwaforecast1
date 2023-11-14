@@ -132,6 +132,7 @@ const parser10 = new Parser10min();
 const lastFetchTime = ref(dateAddMinutes(new Date(), -20));   // 指定一個20分鐘前的時間，以確保頁面載入時會取資料
 const fatchCount = ref(0);   //記錄總共抓了幾次10min觀測資料
 const obsTime = ref(new Date());   // 指定一個20分鐘前的時間，以確保頁面載入時會取資料
+let isObsTimeSameAsFcTime = ref(true);
 const fullObsData = ref({});
 const countyStation = ref({});   // key:countyFullname, value:stationId; 頁面reload(=app重啟)後隨機變換
 const obsData = ref({'meow':33});   // key:stationId, value:(解析後的output)
@@ -193,6 +194,7 @@ watch(jsonstr10, () => {
   // console.log(`189, watcher, 抓完資料後更新 lastFetchTime 為 ${lastFetchTime.value}`);
   // console.log(`189, watcher, 目前累計抓取觀測資料次數： ${fatchCount.value} 次`);
   obsTime.value = parser10.obsTime;
+  isObsTimeSameAsFcTime.value = dateFormat(obsTime.value,fmtToday) == dateFormat(fcDate.value||new Date(),fmtToday);
   fullObsData.value = parser10.obsData;
 
   //若某county尚未決定要取哪個station的資料，則為它隨機決定
@@ -536,7 +538,7 @@ export default {
               <div class="m-4 text-gray text-center"><font-awesome-icon icon="fa-solid fa-spinner" size="2x" spin></font-awesome-icon></div>
             </div>
             <div v-if="isData10minLoaded" class="col d-flex justify-content-between">
-              <div class="text-secondary fw-bold" v-text="dateFormat(fcDate, fmtToday)"></div>
+              <div class="text-secondary fw-bold" v-text="dateFormat(obsTime, fmtToday)"></div>
               <div class="d-flex justify-content-center">
                 <div class="text-start text-grayl d-sm-none" v-text="dateFormat(obsTime, fmtHHmm)"></div>
                 <div class="text-start text-grayl d-none d-sm-block" v-text="dateFormat(obsTime, fmtHHmm)"></div>
@@ -550,6 +552,9 @@ export default {
           </div>
 
           <!-- 36hr forecast -->
+          <div v-if="timestrs.length && !isObsTimeSameAsFcTime" class="row mt-1 mb-n2">
+            <div class="col text-secondary fw-bold" v-text="dateFormat(fcDate, fmtToday)"></div>
+          </div>
           <div class="row text-center my-1">
             <div v-if="!timestrs.length" class="col bg-light rounded rounded-2 mx-1 mt-2 py-2">
               <div class="m-4 text-gray"><font-awesome-icon icon="fa-solid fa-spinner" size="2x" spin></font-awesome-icon></div>
