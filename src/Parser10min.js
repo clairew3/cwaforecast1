@@ -22,9 +22,9 @@ class Parser10min {
 		
 		let x = JSON.parse(this.rawjson);
 
-		this.dataSeemsCorrect = JSON.parse(String(x['success']).toLowerCase())
-			&& 'O-A0003-001'=== (x['result'] && x['result']['resource_id'])
-			&& x['records']['location'] && x['records']['location']['length'] > 0;
+		this.dataSeemsCorrect = 'true' === x['success']
+			&& 'O-A0003-001' === x['result']['resource_id']
+			&& x['records']['Station']['length'] > 0;
 
 		if (!this.dataSeemsCorrect) {
 			throw new Error("unknown content");
@@ -37,16 +37,32 @@ class Parser10min {
 
 /***** input sample:
 {
-  lat: '25.093730',
-  lon: '121.184277',
-  locationName: '西濱S032K',
-  stationId: 'CAC060',
-  time: { obsTime: '2023-11-01 16:00:00' },
-  weatherElement: [
-    { elementName: 'ELEV', elementValue: '21.0' },
-    { elementName: 'TEMP', elementValue: '26.8' }
-  ],
-  parameter: [ { parameterName: 'CITY', parameterValue: '桃園市' } ]
+  StationName: '國一N013K',
+  StationId: 'CAA010',
+  ObsTime: { DateTime: '2023-09-25T11:00:00+08:00' },
+  GeoInfo: {
+    Coordinates: [ [Object], [Object] ],
+    StationAltitude: '39.0',
+    CountyName: '新北市',
+    TownName: '汐止區',
+    CountyCode: '65000',
+    TownCode: '65000110'
+  },
+  WeatherElement: {
+    Weather: '晴',
+    VisibilityDescription: '-99',
+    SunshineDuration: '-99',
+    Now: { Precipitation: '0.0' },
+    WindDirection: '40.0',
+    WindSpeed: '2.5',
+    AirTemperature: '31.7',
+    RelativeHumidity: '73',
+    AirPressure: '-99',
+    UVIndex: '-99',
+    Max10MinAverage: { WindSpeed: '3.9', Occurred_at: [Object] },
+    GustInfo: { PeakGustSpeed: '7.4', Occurred_at: [Object] },
+    DailyExtreme: { DailyHigh: [Object], DailyLow: [Object] }
+  }
 }
 ******/
 
@@ -57,12 +73,12 @@ obsTime: 一個 Date() 物件
 obsData: 
 {
 	"高雄市": { 
-		"stationId": { stationName: "測站名稱",	elev: "30",	temp: "25.0" },
-		"stationId": { stationName: "測站名稱",	elev: "30",	temp: "25.0" },
+		"stationId": { stationName: "觀測站名稱",	elev: "30",	temp: "25.0" },
+		"stationId": { stationName: "觀測站名稱",	elev: "30",	temp: "25.0" },
 	},
 	"苗栗縣": { 
-		"stationId": { stationName: "測站名稱",	elev: "30",	temp: "25.0" },
-		"stationId": { stationName: "測站名稱",	elev: "30",	temp: "25.0" },
+		"stationId": { stationName: "觀測站名稱",	elev: "30",	temp: "25.0" },
+		"stationId": { stationName: "觀測站名稱",	elev: "30",	temp: "25.0" },
 	},
 }
 
@@ -75,34 +91,30 @@ obsData:
 		this.checkData();
 
 		// for parsers
-		const fmt = 'yyyy-MM-dd HH:mm:ss';   // ex: "2023-11-01 16:00:00"
+		const fmt = "yyyy-MM-dd'T'HH:mm:ssxxx";   // ex: "2023-11-15T14:40:00+08:00"
 
 
 		let distinctObsTime = {};   // 用來收集所有的time字串 (所有觀測資料的時間應該都是一致的；distinct完應該只會有一筆資料 (理論上?))
 		let obsData = {};   // 觀測資料 (obs = observation)
 				
-		let records = this.fullobj.records.location;
+		let records = this.fullobj.records.Station;
 		records.forEach(e => {
 	
-			distinctObsTime[e.time.obsTime] = null;
+			distinctObsTime[e.ObsTime.DateTime] = null;
 		
-			let county = e.parameter[0].parameterValue;
+			let county = e.GeoInfo.CountyName;
 			obsData[county] = obsData[county] || {};
 		
 			let tmpElev, tmpTemp;
-			e.weatherElement.forEach(e2 => {
-				if ('ELEV' === e2.elementName) {
-					tmpElev = e2.elementValue;
-				}
-				if ('TEMP' === e2.elementName) {
-					tmpTemp = e2.elementValue;
-				}
-			});
+			tmpElev = e.GeoInfo.StationAltitude;
+			tmpTemp = e.WeatherElement.AirTemperature;
 		
-			obsData[county][e.stationId] = {
-				'stationName': e.locationName,
-				'elev': tmpElev,
-				'temp': tmpTemp,
+			if (Number(tmpTemp) > -50) {
+				obsData[county][String(e.StationId)] = {
+					'stationName': e.StationName,
+					'elev': tmpElev,
+					'temp': tmpTemp,
+				}
 			};
 		
 		});

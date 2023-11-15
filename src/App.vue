@@ -194,7 +194,12 @@ watch(jsonstr10, () => {
   // console.log(`189, watcher, 抓完資料後更新 lastFetchTime 為 ${lastFetchTime.value}`);
   // console.log(`189, watcher, 目前累計抓取觀測資料次數： ${fatchCount.value} 次`);
   obsTime.value = parser10.obsTime;
-  isObsTimeSameAsFcTime.value = dateFormat(obsTime.value,fmtToday) == dateFormat(fcDate.value||new Date(),fmtToday);
+  // console.log(`197 obsTime.value: [${obsTime.value}]`);
+  // console.log(`197 fcDate.value: [${fcDate.value}]`);
+  // console.log(`199: [${fcDate.value||new Date()}]`);
+  // console.log(`200: [${dateFormat(fcDate.value||new Date(),fmtToday)}]`);
+  // console.log(`201: [${dateFormat(obsTime.value,fmtToday)}]`);
+  isObsTimeSameAsFcTime.value = dateFormat(obsTime.value,fmtToday) == dateFormat((fcDate.value||new Date()),fmtToday);
   fullObsData.value = parser10.obsData;
 
   //若某county尚未決定要取哪個station的資料，則為它隨機決定
