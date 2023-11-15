@@ -8,7 +8,9 @@ You need a CWA authorization key to run this pure frotend web app.
 
 ## How to get a CWA authorization key?
 
-After being a registered user on https://opendata.cwa.gov.tw , login the website, and click the button `Get Authorization Key`.
+1. Be a registered user on https://opendata.cwa.gov.tw .
+
+2. Go to https://opendata.cwa.gov.tw , login, and click the button named `Get Authorization Key`.
 
 
 ## How to Run this app?
@@ -25,7 +27,7 @@ After being a registered user on https://opendata.cwa.gov.tw , login the website
 
 4. Run `npm install` in the folder or directory you cloned into.
 
-5. Run `npm start`, or run `vite`.
+5. Run `npm start`.
 
 6. Browse the URL that vite provided, ex: `http://localhost:5990`.
 
