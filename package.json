@@ -1,5 +1,5 @@
 {
-  "name": "cwaforcast1",
+  "name": "cwaforecast1",
   "version": "0.2.0",
   "description": "A simple frontend web app that shows weather information from CWA",
   "browser": "src/main.js",
