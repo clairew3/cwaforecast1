@@ -3,7 +3,7 @@
 
 ------------------------------------------------------------
 
-You need a CWA authorization key to run this pure frotend web app.
+You need a CWA authorization key to run this pure frontend web app.
 
 
 ## How to get a CWA authorization key?
