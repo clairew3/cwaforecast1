@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
+import { counties, countiesArr } from './src/County.js';
 import { getRawJsonStrFromFile } from './DataProvider.js';
 import { Parser10min } from './src/Parser10min.js';
 import { format, parse } from 'date-fns';
@@ -46,6 +47,8 @@ describe(`Parser10min.js 可否如預期運作`, () => {
 		// act ------
 		let parser = new Parser10min();
 		parser.setRawjson(jsonstr).parse();
+		let obsData = parser.obsData;
+
 
 		// assert ------
 
@@ -67,6 +70,30 @@ describe(`Parser10min.js 可否如預期運作`, () => {
 		const fmt = "yyyy-MM-dd'T'HH:mm:ssxxx";   // ex: "2023-11-15T14:40:00+08:00"
 		const obsTimeShouldBe = '2023-11-15T14:20:00+08:00';
 		expect.soft(format(parser.obsTime, fmt)).toBe(obsTimeShouldBe);
+
+		// 觀測資料第0筆應為：
+		// 縣市：基隆市
+		// 觀測站名稱：基隆
+		// station id: 466940
+		// 標高 (GeoInfo.StationAltitude)： 26.7 公尺
+		// 氣溫 (WeatherElement.AirTemperature)： 21 ℃
+		let dataOfSomeCounty = obsData['基隆市'];
+		let observation = dataOfSomeCounty['466940'];
+		expect(observation['stationName']).toBe('基隆');
+		expect(observation['elev']).toBe('26.7');
+		expect(observation['temp']).toBe('21');
+
+		// 觀測資料第136筆應為：
+		// 縣市：臺南市
+		// 觀測站名稱：西濱N304K
+		// station id: 466940
+		// 標高 (GeoInfo.StationAltitude)： 49.0 公尺
+		// 氣溫 (WeatherElement.AirTemperature)： 24.2 ℃
+		dataOfSomeCounty = obsData['臺南市'];
+		observation = dataOfSomeCounty['CAN120'];
+		expect(observation['stationName']).toBe('西濱N304K');
+		expect(observation['elev']).toBe('49.0');
+		expect(observation['temp']).toBe('24.2');
 
 	});
 
