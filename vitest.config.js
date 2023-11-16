@@ -6,8 +6,12 @@ export default mergeConfig(
 	viteConfig,
 	defineConfig({
 		test: {
-			include: ['**/*.spec.js'],
+			// 哪些檔案是「測試程式」
+			include: ['**/*.test.js'],
+			// 是否global自動引入測試所需指令/function (ex: describe, it, expect ... etc)
 			globals: true,
 		},
 	}),
 );
+
+
