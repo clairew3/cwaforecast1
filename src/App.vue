@@ -66,6 +66,7 @@ const pop = ref({});
 const timestrs = ref([]);
 const timeTitles = ref([]);
 const timeDescs = ref([]);
+const forecastd = ref(null);
 
 
 watch(jsonstr36, () => {
@@ -78,6 +79,7 @@ watch(jsonstr36, () => {
   timestrs.value = parser36.timestrs;
   timeTitles.value = parser36.timeTitles;
   timeDescs.value = parser36.timeDescs;
+  forecastd.value = dateParse(parser36.timestrs[0].substring(0,8), fmtyyyyMMdd, new Date());
 });
 
 
@@ -132,7 +134,8 @@ const parser10 = new Parser10min();
 const lastFetchTime = ref(dateAddMinutes(new Date(), -20));   // 指定一個20分鐘前的時間，以確保頁面載入時會取資料
 const fatchCount = ref(0);   //記錄總共抓了幾次10min觀測資料
 const obsTime = ref(new Date());   // 指定一個20分鐘前的時間，以確保頁面載入時會取資料
-let isObsTimeSameAsFcTime = ref(true);
+const isObsDSameAsForecastD = ref(true);
+const obsd = ref(null);
 const fullObsData = ref({});
 const countyStation = ref({});   // key:countyFullname, value:stationId; 頁面reload(=app重啟)後隨機變換
 const obsData = ref({'meow':33});   // key:stationId, value:(解析後的output)
@@ -186,6 +189,18 @@ function setStationFor(countyFullname, stationId) {
 }
 
 
+function calcIsObsDSameAsForecastD() {
+  if (obsd.value && forecastd.value) {
+    let sO = dateFormat(obsd.value, fmtyyyyMMdd);
+    let sF = dateFormat(forecastd.value, fmtyyyyMMdd);
+    isObsDSameAsForecastD.value = sO == sF;
+  }
+}
+watch(obsd, calcIsObsDSameAsForecastD);
+watch(forecastd, calcIsObsDSameAsForecastD);
+
+
+
 watch(jsonstr10, () => {
   isData10minLoaded.value = true;
   // console.log(`jsonstr10: ${jsonstr10.value}`);
@@ -199,7 +214,7 @@ watch(jsonstr10, () => {
   // console.log(`199: [${fcDate.value||new Date()}]`);
   // console.log(`200: [${dateFormat(fcDate.value||new Date(),fmtToday)}]`);
   // console.log(`201: [${dateFormat(obsTime.value,fmtToday)}]`);
-  isObsTimeSameAsFcTime.value = dateFormat(obsTime.value,fmtToday) == dateFormat((fcDate.value||new Date()),fmtToday);
+  obsd.value = obsTime.value;
   fullObsData.value = parser10.obsData;
 
   //若某county尚未決定要取哪個station的資料，則為它隨機決定
@@ -557,8 +572,8 @@ export default {
           </div>
 
           <!-- 36hr forecast -->
-          <div v-if="timestrs.length && !isObsTimeSameAsFcTime" class="row mt-1 mb-n2">
-            <div class="col text-secondary fw-bold" v-text="dateFormat(fcDate, fmtToday)"></div>
+          <div v-if="timestrs.length && !isObsDSameAsForecastD" class="row mt-1 mb-n2">
+            <div class="col text-secondary fw-bold" v-text="dateFormat(forecastd, fmtToday)"></div>
           </div>
           <div class="row text-center my-1">
             <div v-if="!timestrs.length" class="col bg-light rounded rounded-2 mx-1 mt-2 py-2">
