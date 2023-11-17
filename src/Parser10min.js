@@ -112,8 +112,8 @@ obsData:
 			if (Number(tmpTemp) > -50) {
 				obsData[county][String(e.StationId)] = {
 					'stationName': e.StationName,
-					'elev': tmpElev,
-					'temp': tmpTemp,
+					'elev': String(tmpElev),
+					'temp': String(tmpTemp),
 				}
 			};
 		

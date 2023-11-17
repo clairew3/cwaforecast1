@@ -112,6 +112,63 @@ docs:
 *	https://fontawesome.com/docs/web/use-with/vue/add-icons
 
 ------------------------------------------------------------
+
+Add Vitest:
+
+```
+npm install vitest --save-dev
+```
+
+Add file `vitest.config.js`:
+
+```
+import { mergeConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
+import viteConfig from './vite.config';
+
+export default mergeConfig(
+	viteConfig,
+	defineConfig({
+		test: {
+			include: ['**/*.test.js'],
+			globals: true,
+		},
+	}),
+);
+```
+
+Add file `test/Parser10min.test.js`:
+
+```
+import { describe, it, expect } from 'vitest';
+
+describe('Parser10min', () => {
+
+	it('a helloTestWorld: 1 + 1 should be 2', () => {
+		expect(1+1).toBe(2);
+	});
+	
+});
+```
+
+Update `package.json`, update the `test` script as:
+
+```
+"test": "vitest"
+```
+
+Run `npm test` when you need it.
+
+
+------------------------------------------------------------
+
+Add axios:
+
+```
+npm install axios --save-dev
+```
+
+------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
