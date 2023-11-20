@@ -45,8 +45,8 @@ function getAppropriateDate() {
 
 
 // 亂數決定初始縣市
-let r = Math.floor(Math.random() * countiesArr.length);
-const currCountyObj = ref(countiesArr[r]);
+let rx = Math.floor(Math.random() * countiesArr.length);
+const currCountyObj = ref(countiesArr[rx]);
 const currCountyFullname = computed(() => {
   return currCountyObj.value.fullname;
 });
@@ -425,49 +425,31 @@ function showDivInfo() {
 }
 
 
-</script>
-
-<script>
 
 const tww = 1440;
 const twh = 2550;
 const r = 0.67;
 const tww2 = ref(tww/r);
 // const twh2 = ref(twh/r);
-
 // console.log(`tww, twh, r, tww2, twh2: `);
 // console.log(`${tww}, ${twh}, ${r}, ${tww2.value}, ${twh2.value}: `);
 
+const mapSrcText = ref('Thanks Ythlev for map of Taiwan that licensed CC 4.0');
+const mapSrcUrl = ref('https://zh.wikipedia.org/wiki/File:Blank_Taiwan_map.svg');
 
-export default {
-  data() {
-    return {
-      tww: tww,
-      twh: twh,
-      r: r,
-      mapAuthor: 'Ythlev',
-      mapSrcText: 'Thanks Ythlev for map of Taiwan that licensed CC 4.0',
-      mapSrcUrl: 'https://zh.wikipedia.org/wiki/File:Blank_Taiwan_map.svg',
-      currCity: 'currCity',
-      // currDate: currDate,
-      // fmtToday: fmtToday,
-      // dnspans: dnspans,
 
-      //for css calculation
-      // containermd: 720,  // px
-      // containerLg: 960,
-      // containerXl: 1140,
-      // containerXxl: 1320,
-      mapoffsetMd: 15,   // 15%
-      mapoffsetLg: 15,
-      mapoffsetXl: 20,
-      mapoffsetXxl: 27,
-
-    };
-  }
-};
+//for css calculation
+// containermd: 720,  // px
+// containerLg: 960,
+// containerXl: 1140,
+// containerXxl: 1320,
+const mapoffsetMd = ref(15);   // 15%
+const mapoffsetLg = ref(15);
+const mapoffsetXl = ref(20);
+const mapoffsetXxl = ref(27);
 
 </script>
+
 
 <style>
 @media screen and (min-width: 992px) {
