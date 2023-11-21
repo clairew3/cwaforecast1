@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import axios from 'axios';
-import { counties, countiesArr } from '/src/County.js';
+import { counties, countiesArr } from '../src/County.js';
 import { getRawJsonStrFromFile } from './DataProvider.js';
-import { Parser10min } from '/src/Parser10min.js';
+import { Parser10min } from '../src/Parser10min.js';
 import { format as dateFormat, parse as dateParse, addHours } from 'date-fns';
-import { Authorization } from '/auth/authorization.js';
+import { Authorization } from '../auth/authorization.js';
 
 
 // test suite
