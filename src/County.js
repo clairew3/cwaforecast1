@@ -24,6 +24,8 @@ let data = [
 	{id:'I3',name:'金門',fullname:'金門縣',pathid:'KinmenCounty',n2:'Kinmen',},
 ];
 
+// n2: 在url中使用n2來指定縣市
+
 let counties = {
 	'fullname': {},
 	'id': {},

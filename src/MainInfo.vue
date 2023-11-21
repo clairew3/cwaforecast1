@@ -29,12 +29,10 @@ const router = useRouter();
 
 // 由外界決定初始縣市
 const n2 = computed(() => {
-  // console.log(`31, route.params.n2: [${route.params.n2}]`);
   return route.params.n2;
 });   // n2: see County.js
 
 function isN2Existed(x) {
-  console.log(`35 .... ${(x in counties['n2'])}`);
   return (x in counties['n2']);
 }
 
@@ -70,18 +68,15 @@ async function fetchDataOrRender404(v_n2) {
 }
 
 watch(n2, async (val) => {
-
-  console.log(`59, n2 changed, new value: [${val}]`);
   await fetchDataOrRender404(val);
-  // if (isN2Existed(val)) {
-  //   currCountyObj.value = counties['n2'][val];
-  //   await fetchData(currCountyObj.value.pathid);
-  // } else {
-  //   router.replace({name: 'notFound404'});
-  // }
 });
 
 
+
+
+// -----------------------------------------
+//   LIFECYCLE HOOKS
+// -----------------------------------------
 
 const isMapSelectorPrepared = ref(false);
 
@@ -94,13 +89,6 @@ onMounted(async () => {
 });
 
 
-
-
-
-
-
-
-                          
 
 
 
@@ -322,16 +310,6 @@ watch(jsonstr10, () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 // -----------------------------------------
 //   URL COMPOSER, AND DATA FETCHER
 // -----------------------------------------
@@ -355,7 +333,6 @@ function composeUrl10min() {
 }
 
 async function fetchData(pathid) {
-  console.log(`321, go fetchData().`);
   await fetchData10min();
   await fetchData36hr(pathid);
   await fetchData7d();
@@ -493,17 +470,6 @@ function prepareMapSelector() {
 
 
 
-
-// -----------------------------------------
-//   LIFECYCLE HOOKS
-// -----------------------------------------
-
-
-
-
-
-
-
 // -----------------------------------------
 //   MAP SIZING
 // -----------------------------------------
@@ -544,6 +510,7 @@ const mapSrcUrl = ref('https://zh.wikipedia.org/wiki/File:Blank_Taiwan_map.svg')
 
 
 <style>
+
 @media screen and (min-width: 992px) {
   #theMap {
     width:480px;
@@ -599,6 +566,7 @@ const mapSrcUrl = ref('https://zh.wikipedia.org/wiki/File:Blank_Taiwan_map.svg')
 .weekend {
   background-color: rgba(255, 240, 244, 1);
 }
+
 </style>
 
 
