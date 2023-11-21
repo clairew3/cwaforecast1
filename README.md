@@ -2,7 +2,7 @@
 
 This is a simple frontend web app that shows weather information from CWA, including observation of 10~20 mins ago, and forecast for 36 hours and 7 days. 
 
-We developed it using Vue 3, Vitest and CWA API. 
+We developed it using Vue 3, Vue Router, Vitest and CWA API. 
 
 
 ## Screenshots
