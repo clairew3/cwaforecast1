@@ -35,7 +35,7 @@ function isN2Existed(x) {
 }
 
 // 一開始 render view 時就必須有值 (在 onMounted 之前)；
-// 在沒有值 (null or undefined) 的情況下，會使 vue 給你難以理解的錯誤訊息；
+// 在沒有值 (null or undefined) 的情況下，vue 會給你難以理解的錯誤訊息；
 // 因此利用 emptyCounty 使 vue 可以正常 render view。
 const currCountyObj = ref(emptyCounty);
 if (!init_currCountyObj_ifN2Existed(n2.value)) {
