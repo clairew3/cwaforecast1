@@ -18,9 +18,7 @@ import { wname } from './DayOfWeek.js';
 import { library as falib } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUmbrella, faMap, faSpinner } from '@fortawesome/free-solid-svg-icons';
-falib.add(faUmbrella);
-falib.add(faMap);
-falib.add(faSpinner);
+falib.add(faUmbrella, faMap, faSpinner);
 
 
 const route = useRoute();

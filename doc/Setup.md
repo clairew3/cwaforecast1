@@ -29,7 +29,7 @@ You need a CWA authorization key to run this pure frontend web app.
 
 5. Run `npm start`.
 
-6. Browse the URL that vite provided, ex: `http://localhost:5990`.
+6. Browse the URL that vite provided, ex: `http://localhost:5173`.
 
 ------------------------------------------------------------
 (end)
