@@ -12,7 +12,7 @@ There are some screenshots in `doc/scrn`.
 
 ## Setup
 
-As a pure frontend web app, it requires a CWA authorization to run. Checkout `/doc/Setup.md` for details.
+As a pure frontend web app, it requires a CWA authorization to run. Checkout `doc/Setup.md` for details.
 
 
 ## License
