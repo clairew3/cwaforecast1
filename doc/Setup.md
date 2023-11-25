@@ -10,7 +10,7 @@ You need a CWA authorization key to run this pure frontend web app.
 
 1. Be a registered user on https://opendata.cwa.gov.tw .
 
-2. Go to https://opendata.cwa.gov.tw , login, and click the button named `Get Authorization Key`.
+2. Visit https://opendata.cwa.gov.tw , login, and click the button named `Get Authorization Key`.
 
 
 ## How to Run this app?
